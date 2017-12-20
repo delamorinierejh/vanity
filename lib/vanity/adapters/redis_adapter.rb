@@ -212,7 +212,7 @@ module Vanity
       end
 
       def ab_get_outcome(experiment)
-        alternative = @experiments["#{experiment}:outcome"]
+        alternative = @experiments.scard("#{experiment}:outcome")
         alternative && alternative.to_i
       end
 
