@@ -147,7 +147,7 @@ module Vanity
         {
           :participants => @experiments.scard("#{experiment.id}:alts:#{alternative}:participants").to_i,
           :converted    => @experiments.scard("#{experiment.id}:alts:#{alternative}:metric:#{metric_id}:converted").to_i,
-          :conversions  => @experiments["#{experiment.id}:alts:#{alternative}:metric:#{metric_id}:conversions"].to_i
+          :conversions  => @experiments.scard("#{experiment.id}:alts:#{alternative}:metric:#{metric_id}:conversions").to_i
         }
       end
 
@@ -231,7 +231,7 @@ module Vanity
       end
 
       def ab_get_outcome(experiment_id)
-        alternative = @experiments["#{experiment_id}:outcome"]
+        alternative = @experiments.scard("#{experiment_id}:outcome")
         alternative && alternative.to_i
       end
 
