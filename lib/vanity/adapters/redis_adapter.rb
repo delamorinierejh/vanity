@@ -146,7 +146,7 @@ module Vanity
         {
           :participants => @experiments.scard("#{experiment}:alts:#{alternative}:participants").to_i,
                 :converted    => @experiments.scard("#{experiment}:alts:#{alternative}:converted").to_i,
-          :conversions  => @experiments["#{experiment}:alts:#{alternative}:conversions"].to_i
+          :conversions  => @experiments.scard("#{experiment}:alts:#{alternative}:conversions").to_i
         }
       end
 
