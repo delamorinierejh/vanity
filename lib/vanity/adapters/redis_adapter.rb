@@ -72,7 +72,7 @@ module Vanity
       # -- Metrics --
 
       def get_metric_last_update_at(metric)
-        last_update_at = @metrics["#{metric}:last_update_at"]
+        last_update_at = @metrics.get("#{metric}:last_update_at")
         last_update_at && Time.at(last_update_at.to_i)
       end
 
@@ -81,7 +81,7 @@ module Vanity
           values.each_with_index do |v,i|
             @metrics.incrby "#{metric}:#{timestamp.to_date}:value:#{i}", v
           end
-          @metrics.get("#{metric}:last_update_at") = Time.now.to_i
+          @metrics.set "#{metric}:last_update_at"], Time.now.to_i
         end
       end
 
@@ -164,7 +164,7 @@ module Vanity
 
       def ab_show(experiment_id, identity, alternative)
         call_redis_with_failover do
-          @experiments.get("#{experiment_id}:participant:#{identity}:show") = alternative
+          @experiments.setnx "#{experiment_id}:participant:#{identity}:show", alternative
         end
       end
 
