@@ -81,7 +81,7 @@ module Vanity
           values.each_with_index do |v,i|
             @metrics.incrby "#{metric}:#{timestamp.to_date}:value:#{i}", v
           end
-          @metrics.set "#{metric}:last_update_at"], Time.now.to_i
+          @metrics.set "#{metric}:last_update_at", Time.now.to_i
         end
       end
 
