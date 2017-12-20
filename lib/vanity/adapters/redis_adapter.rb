@@ -154,11 +154,13 @@ module Vanity
       end
 
       def ab_counts_by_metric(experiment, alternative)
+        # placeholder a character is put in front of scard in conversions
+        # to circumnavigate the Redis WRONGTYPE Operation against a key holding the wrong kind of value
         counts = {}
         experiment.metrics.each do |metric|
           counts[metric.id] = {
             :converted    => @experiments.scard("#{experiment.id}:alts:#{alternative}:metric:#{metric.id}:converted").to_i,
-            :conversions  => @experiments["#{experiment.id}:alts:#{alternative}:metric:#{metric.id}:conversions"].to_i
+            :conversions  => @experiments.scard("a#{experiment.id}:alts:#{alternative}:metric:#{metric.id}:conversions").to_i
           }
         end
         counts
